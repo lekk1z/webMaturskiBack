@@ -14,23 +14,23 @@ public class MenuController {
     public List<Menu> getAllMenuItems(){
         return menuRepository.findAll();
     }
-    // Get a specific menu item by ID
+
     @GetMapping("/{id}")
     public Menu getMenuItemById(@PathVariable String id) {
         return menuRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Menu item not found"));
     }
+
     @GetMapping("/category/{categoryId}")
     public List<Menu> getMenuItemsByCategoryId(@PathVariable int categoryId) {
         return menuRepository.findAllByCategoryId(categoryId);
     }
-    // Create a new menu item
+
     @PostMapping
     public Menu createMenuItem(@RequestBody Menu menu) {
         return menuRepository.save(menu);
     }
 
-    // Update an existing menu item
     @PutMapping("/{id}")
     public Menu updateMenuItem(@PathVariable String id, @RequestBody Menu menu) {
         if (!menuRepository.existsById(id)) {
@@ -40,7 +40,6 @@ public class MenuController {
         return menuRepository.save(menu);
     }
 
-    // Delete a menu item
     @DeleteMapping("/{id}")
     public void deleteMenuItem(@PathVariable String id) {
         menuRepository.deleteById(id);

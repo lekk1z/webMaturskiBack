@@ -14,23 +14,19 @@ public class OrderController {
         @Autowired
         private MenuRepository menuRepository;
 
-        // Get all orders
         @GetMapping
         public List<Order> getAllOrders() {
             return orderRepository.findAll();
         }
 
-        // Get a specific order by ID
         @GetMapping("/{id}")
         public Order getOrderById(@PathVariable String id) {
             return orderRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Order not found"));
         }
 
-        // Create a new order
         @PostMapping
         public Order createOrder(@RequestBody Order order) {
-            // Validate that menu items exist
             for (OrderItem item : order.getItems()) {
                 if (!menuRepository.existsById(item.getMenuItemId())) {
                     throw new RuntimeException("Menu item not found: " + item.getMenuItemId());
@@ -39,7 +35,6 @@ public class OrderController {
             return orderRepository.save(order);
         }
 
-        // Update an existing order (e.g., change the status)
         @PutMapping("/{id}")
         public Order updateOrder(@PathVariable String id, @RequestBody Order order) {
             if (!orderRepository.existsById(id)) {
@@ -49,13 +44,11 @@ public class OrderController {
             return orderRepository.save(order);
         }
 
-        // Delete an order
         @DeleteMapping("/{id}")
         public void deleteOrder(@PathVariable String id) {
             orderRepository.deleteById(id);
         }
 
-        // Calculate the total price of an order
         @GetMapping("/{id}/total")
         public double calculateTotalPrice(@PathVariable String id) {
             Order order = orderRepository.findById(id)
