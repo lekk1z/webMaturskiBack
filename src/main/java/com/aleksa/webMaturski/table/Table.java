@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Table {
     @Id
     private String id;
-    private int number;
+    private String number;
     private String[] ordersId;
+    private boolean occupied = false;
 }
