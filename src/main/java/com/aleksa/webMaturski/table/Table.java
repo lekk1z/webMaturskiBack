@@ -10,6 +10,7 @@ public class Table {
     @Id
     private String id;
     private String number;
+    //private int brMesta;
     private String[] ordersId;
     private boolean occupied = false;
 }
