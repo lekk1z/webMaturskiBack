@@ -1,6 +1,8 @@
 package com.aleksa.webMaturski.table;
 
+import com.mongodb.DuplicateKeyException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -23,10 +25,14 @@ public class TableController {
     }
 
     @PostMapping
-    public Table createTable(@RequestBody Table table) {
-        return tableRepository.save(table);
+    public ResponseEntity<?> createTable(@RequestBody Table table) {
+        try {
+            Table created = tableRepository.save(table);
+            return ResponseEntity.ok(created);
+        } catch (DuplicateKeyException e) {
+            return ResponseEntity.badRequest().body("A table with this placement already exists.");
+        }
     }
-
     @PutMapping("/{id}")
     public Table updateTable(@PathVariable String id, @RequestBody Table table) {
         if (!tableRepository.existsById(id)) {
