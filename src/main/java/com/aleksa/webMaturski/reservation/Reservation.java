@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Document(collection = "reservations")
 public class Reservation {
     @Id
-    private String Id;
+    private String id;
     private String tableId;
     private LocalDateTime date;
     private String name;
