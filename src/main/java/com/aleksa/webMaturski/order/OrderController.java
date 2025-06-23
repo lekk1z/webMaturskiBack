@@ -49,6 +49,11 @@ public class OrderController {
             orderRepository.deleteById(id);
         }
 
+        @DeleteMapping("/all")
+        public void deleteAllOrders(){
+            orderRepository.deleteAll();
+        }
+
         @GetMapping("/{id}/total")
         public double calculateTotalPrice(@PathVariable String id) {
             Order order = orderRepository.findById(id)
